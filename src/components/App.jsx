@@ -1,16 +1,13 @@
+import NewPixabayAPI from '../API/API';
+import Searchbar from './Searchbar/Searchbar';
+import s from './App.module.css';
+
 export const App = () => {
+  // state = {};
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div className={s.App}>
+      <Searchbar></Searchbar>
     </div>
   );
 };
