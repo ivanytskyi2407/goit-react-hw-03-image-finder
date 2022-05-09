@@ -1,13 +1,20 @@
-import NewPixabayAPI from '../API/API';
+// import NewPixabayAPI from '../API/API';
+import React, { Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
+import Button from './Button/Button';
+import ImageGallery from './ImageGallery/ImageGallery';
 import s from './App.module.css';
 
-export const App = () => {
+export default class App extends Component {
   // state = {};
 
-  return (
-    <div className={s.App}>
-      <Searchbar></Searchbar>
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className={s.App}>
+        <Searchbar></Searchbar>
+        <ImageGallery />
+        <Button />
+      </div>
+    );
+  }
+}
