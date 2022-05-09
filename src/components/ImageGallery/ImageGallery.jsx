@@ -1,9 +1,9 @@
 import s from './ImageGallery.module.css';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
-const ImageGallery = ({}) => {
+const ImageGallery = ({ query }) => {
   return (
     <ul className={s.ImageGallery}>
-      <ImageGalleryItem />
+      <ImageGalleryItem query={query} />
     </ul>
   );
 };
