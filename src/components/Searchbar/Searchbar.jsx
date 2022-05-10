@@ -10,6 +10,7 @@ export default class Searchbar extends Component {
   handleQueryChange = e => {
     this.setState({ query: e.currentTarget.value.toLowerCase() });
   };
+
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.query.trim() === '') {
@@ -32,6 +33,7 @@ export default class Searchbar extends Component {
             type="text"
             autoComplete="off"
             autoFocus
+            value={this.state.query}
             placeholder="Search images and photos"
             onChange={this.handleQueryChange}
           />
