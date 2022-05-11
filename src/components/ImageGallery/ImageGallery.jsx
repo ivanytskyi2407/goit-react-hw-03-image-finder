@@ -10,20 +10,22 @@ export default class ImageGallery extends Component {
     pictures: [],
     error: null,
     status: 'idle',
-    page: 1,
     showModal: false,
     largeImageURL: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.query !== this.props.query) {
+    if (
+      prevProps.query !== this.props.query ||
+      prevProps.page !== this.props.page
+    ) {
       this.setState({ status: 'pending' });
-      API(this.props.query, this.state.page)
+      API(this.props.query, this.props.page)
         .then(pictures => {
-          this.setState({
-            pictures,
-            status: 'resolved',
-          });
+          this.setState(prevState => ({
+            // status: 'resolved',
+            pictures: [...prevState.pictures, ...pictures],
+          }));
           if (pictures.length === 0) {
             return alert('нічого немає');
           }
@@ -51,7 +53,6 @@ export default class ImageGallery extends Component {
   };
 
   closeModal = e => {
-    console.log(e.code);
     if (e.target === e.currentTarget) {
       this.setState({ showModal: false });
     }
@@ -63,14 +64,14 @@ export default class ImageGallery extends Component {
     if (status === 'idle') {
       return;
     }
-    if (status === 'pending') {
-      return Loader();
-    }
+    // if (status === 'pending') {
+    //   return Loader();
+    // }
 
     if (status === 'rejected') {
       return <h1>{`Нічого немає по запиту ${this.props.query}`}</h1>;
     }
-    if (status === 'resolved') {
+    if (pictures.length > 0) {
       return (
         <ul className={s.ImageGallery}>
           <ImageGalleryItem pictures={pictures} showModal={this.handleModal} />
