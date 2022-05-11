@@ -3,6 +3,7 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import { Component } from 'react';
 import API from '../API/API';
 import Modal from '../Modal/Modal';
+import { Loader } from '../Loader/Loader';
 
 export default class ImageGallery extends Component {
   state = {
@@ -66,7 +67,7 @@ export default class ImageGallery extends Component {
       return;
     }
     if (status === 'pending') {
-      return <div>LOADING</div>;
+      return <Loader />;
     }
 
     if (status === 'rejected') {
