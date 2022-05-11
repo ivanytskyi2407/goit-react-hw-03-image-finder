@@ -8,6 +8,7 @@ export default function ImageGalleryItem({ pictures }) {
           src={webformatURL}
           alt={tags}
           className={s.ImageGalleryItemImage}
+          // onClick={}
         />
       </li>
     );

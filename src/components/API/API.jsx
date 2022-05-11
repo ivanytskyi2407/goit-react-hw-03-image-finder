@@ -8,7 +8,6 @@ export default function API(name, page) {
       `${BASE_URL}/?key=${API_KEY}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=12`
     )
     .then(response => {
-      console.log(response.data.hits);
       return response.data.hits;
     });
 }

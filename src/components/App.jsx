@@ -1,11 +1,9 @@
-// import NewPixabayAPI from '../API/API';
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import s from './App.module.css';
-import API from './API/API';
 
 export default class App extends Component {
   state = {
