@@ -2,6 +2,7 @@ import s from './ImageGallery.module.css';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import { Component } from 'react';
 import API from '../API/API';
+import Modal from '../Modal/Modal';
 
 export default class ImageGallery extends Component {
   state = {
@@ -9,6 +10,8 @@ export default class ImageGallery extends Component {
     error: null,
     status: 'idle',
     page: 1,
+    showModal: false,
+    largeImageURL: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -16,7 +19,11 @@ export default class ImageGallery extends Component {
       this.setState({ status: 'pending' });
       API(this.props.query, this.state.page)
         .then(pictures => {
-          this.setState({ pictures, status: 'resolved' });
+          this.setState({
+            pictures,
+
+            status: 'resolved',
+          });
           if (pictures.length === 0) {
             return alert('нічого немає');
           }
@@ -24,9 +31,36 @@ export default class ImageGallery extends Component {
         .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.setState({ showModal: false });
+    }
+  };
+
+  handleModal = largeImageURL => {
+    this.setState({
+      showModal: !this.state.showModal,
+      largeImageURL: largeImageURL,
+    });
+  };
+
+  closeModal = e => {
+    console.log(e.code);
+    if (e.target === e.currentTarget) {
+      this.setState({ showModal: false });
+    }
+  };
 
   render() {
-    const { pictures, status } = this.state;
+    const { pictures, status, showModal } = this.state;
 
     if (status === 'idle') {
       return;
@@ -41,7 +75,13 @@ export default class ImageGallery extends Component {
     if (status === 'resolved') {
       return (
         <ul className={s.ImageGallery}>
-          <ImageGalleryItem pictures={pictures} />;
+          <ImageGalleryItem pictures={pictures} showModal={this.handleModal} />
+          {showModal && (
+            <Modal
+              bigPicture={this.state.largeImageURL}
+              closeModal={this.closeModal}
+            />
+          )}
         </ul>
       );
     }
