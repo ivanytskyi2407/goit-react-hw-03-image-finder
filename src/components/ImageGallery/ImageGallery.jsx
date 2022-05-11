@@ -22,7 +22,6 @@ export default class ImageGallery extends Component {
         .then(pictures => {
           this.setState({
             pictures,
-
             status: 'resolved',
           });
           if (pictures.length === 0) {
@@ -35,11 +34,9 @@ export default class ImageGallery extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
   }
-
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeyDown);
   }
-
   handleKeyDown = e => {
     if (e.code === 'Escape') {
       this.setState({ showModal: false });
@@ -49,7 +46,7 @@ export default class ImageGallery extends Component {
   handleModal = largeImageURL => {
     this.setState({
       showModal: !this.state.showModal,
-      largeImageURL: largeImageURL,
+      largeImageURL,
     });
   };
 
@@ -67,7 +64,7 @@ export default class ImageGallery extends Component {
       return;
     }
     if (status === 'pending') {
-      return <Loader />;
+      return Loader();
     }
 
     if (status === 'rejected') {
