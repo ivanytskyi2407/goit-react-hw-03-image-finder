@@ -3,7 +3,7 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import { Component } from 'react';
 import API from '../API/API';
 import Modal from '../Modal/Modal';
-import { Loader } from '../Loader/Loader';
+// import { Loader } from '../Loader/Loader';
 
 export default class ImageGallery extends Component {
   state = {
