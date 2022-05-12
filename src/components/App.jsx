@@ -28,10 +28,16 @@ export default class App extends Component {
         if (pictures.length === 0) {
           return toast.error('Нічого немає');
         }
+
         this.setState(prevState => ({
           pictures: [...prevState.pictures, ...pictures],
           loadMore: true,
         }));
+        if (pictures.length < 12) {
+          this.setState({
+            loadMore: false,
+          });
+        }
       });
     }
   }
