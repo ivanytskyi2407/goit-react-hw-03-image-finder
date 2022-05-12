@@ -3,7 +3,7 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import { Component } from 'react';
 import API from '../API/API';
 import Modal from '../Modal/Modal';
-// import { Loader } from '../Loader/Loader';
+import { Loader } from '../Loader/Loader';
 
 export default class ImageGallery extends Component {
   state = {
@@ -22,15 +22,19 @@ export default class ImageGallery extends Component {
       this.setState({ status: 'pending' });
       API(this.props.query, this.props.page)
         .then(pictures => {
-          this.setState(prevState => ({
-            // status: 'resolved',
-            pictures: [...prevState.pictures, ...pictures],
-          }));
           if (pictures.length === 0) {
             return alert('нічого немає');
           }
+          this.setState(prevState => ({
+            pictures: [...prevState.pictures, ...pictures],
+          }));
         })
-        .catch(error => this.setState({ error, status: 'rejected' }));
+        .catch(error => this.setState({ error, status: 'rejected' }))
+        .finally(
+          this.setState({
+            status: 'resolved',
+          })
+        );
     }
   }
   componentDidMount() {
@@ -64,14 +68,14 @@ export default class ImageGallery extends Component {
     if (status === 'idle') {
       return;
     }
-    // if (status === 'pending') {
-    //   return Loader();
-    // }
+    if (status === 'pending') {
+      return Loader();
+    }
 
     if (status === 'rejected') {
       return <h1>{`Нічого немає по запиту ${this.props.query}`}</h1>;
     }
-    if (pictures.length > 0) {
+    if (status === 'resolved') {
       return (
         <ul className={s.ImageGallery}>
           <ImageGalleryItem pictures={pictures} showModal={this.handleModal} />

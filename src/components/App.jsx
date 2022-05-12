@@ -10,6 +10,7 @@ export default class App extends Component {
   state = {
     query: '',
     page: 1,
+    loadMore: true,
   };
 
   handlFormSubmit = query => {
@@ -22,13 +23,20 @@ export default class App extends Component {
       };
     });
   };
+  showLoadMore = () => {
+    this.setState({ loadMore: true });
+  };
 
   render() {
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.handlFormSubmit} />
-        <ImageGallery query={this.state.query} page={this.state.page} />
-        <Button onClickButton={this.onClickButton} />
+        <ImageGallery
+          query={this.state.query}
+          page={this.state.page}
+          loadMore={this.showLoadMore}
+        />
+        {this.state.loadMore && <Button onClickButton={this.onClickButton} />}
         <ToastContainer autoClose={2000} position="top-center" />
       </div>
     );
